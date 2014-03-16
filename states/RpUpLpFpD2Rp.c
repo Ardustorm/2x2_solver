@@ -1,6 +1,8 @@
 #pragma systemFile
 #include "color.c"
 
+//Up = blue
+// purple = front
 // to solve R D2 F L U R
 	int up[2][2] = {
 	{ y,g},

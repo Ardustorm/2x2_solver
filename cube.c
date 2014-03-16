@@ -1,7 +1,7 @@
 #pragma systemFile
 
-#include "/states/RD2FLUR.c"
-
+#include "/states/RpUpLpFpD2Rp.c"
+//#include "/states/solved.c"
 
 // a temperary store place so that we do not re read location
 int up_tmp[2][2];
