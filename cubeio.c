@@ -1,8 +1,8 @@
 #pragma systemFile
 
-#include "/states/RpUpLpFpD2Rp.c"
+//#include "/states/RpUpLpFpD2Rp.c"
 //#include "/states/solved.c"
-
+#include "/states/R2UpFpUpF2RpURpUp.c"
 // a temperary store place so that we do not re read location
 int up_tmp[2][2];
 int down_tmp[2][2];
@@ -10,6 +10,21 @@ int lefty_tmp[2][2];
 int right_tmp[2][2];
 int front_tmp[2][2];
 int back_tmp[2][2];
+
+
+
+TFileHandle   hFileHandle;              // will keep track of our file
+  TFileIOResult nIOResult;                // will store our IO results
+  string        sFileName = "Output.txt";   // the name of our file
+  int           nFileSize = 500;          // will store our file size
+  char CR = 0x13;   // define CR (carriage return)
+  char LF = 0x10;   // define LF (line feed)
+
+  string        sMessageToWrite = "ROBOTC IO test!			";    // we will write this to the file
+  string        sMesageToWrite_2 = "A new line!";       // we will also write this to the file on the next line
+  string        incomingString[5];                     // this will store the final, fully-read strings (with new strings getting put into new indexes
+
+
 
 // writes to a temperary place to prevent errors
 void store() {
@@ -45,6 +60,7 @@ int prime = 3;
 
 
 void Y() {
+	WriteText(hFileHandle, nIOResult, "Y ");
 	store();
 	righty[0][0] = right_tmp[1][0];
 	righty[0][1] = right_tmp[0][0];
@@ -88,6 +104,7 @@ void Y(int rot) {
 }
 
 void X() {
+	WriteText(hFileHandle, nIOResult, "X ");
 	store();
 
 	up[0][0] = up_tmp[0][1];
@@ -135,7 +152,8 @@ void X(int rot) {
 
 
 void Z() {
-	X(prime); Y(); X();
+		WriteText(hFileHandle, nIOResult, "Z: ");
+	X(); Y(); X(prime);
 }
 
 void Z(int rot) {
@@ -156,6 +174,7 @@ void Z(int rot) {
 
 // results in a clockwise turn of the up face
 void U() {
+		WriteText(hFileHandle, nIOResult, "U ");
 	store();
 	up[0][0] = up_tmp[1][0];
 	up[0][1] = up_tmp[0][0];
@@ -185,6 +204,7 @@ void U(int rot) {
 }
 
 void R() {
+		WriteText(hFileHandle, nIOResult, "R ");
 	store();
 	righty[0][0] = right_tmp[1][0];
 	righty[0][1] = right_tmp[0][0];
@@ -212,6 +232,7 @@ void R(int rot) {
 	}
 }
 void F() {
+		WriteText(hFileHandle, nIOResult, "F ");
 	store();
 	front[0][0] = front_tmp[1][0];
 	front[0][1] = front_tmp[0][0];
@@ -241,6 +262,7 @@ void F(int rot) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 void D() {
+		WriteText(hFileHandle, nIOResult, "D ");
 	U(); // turns the top layer
 	X(); // then rotates the cube so it is as if the down face was turned
 }
@@ -254,6 +276,7 @@ void D(int rot) {
 }
 
 void L() {
+		WriteText(hFileHandle, nIOResult, "L ");
 	R(); // turns the right layer
 	Y(prime); // then rotates the cube so it is as if the lefty face was turned
 }
@@ -268,7 +291,8 @@ void L(int rot) {
 
 
 void B() {
-	F(); // turns the top layer
+		WriteText(hFileHandle, nIOResult, "B ");
+	F(); // turns the FRONT layer
 	X(prime);
 	Y(); //
 	X();
